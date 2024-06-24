@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VIEW REQUESTS</title>
+
+</head>
+<body>
+<table>
+    <tr>
+
+        <th>
+            Name
+        </th>
+        <th>Contact</th>
+        <th>Province</th>
+        <th>District</th>
+        <th>Local body</th>
+        <th>Identity proof</th>
+        <th>Date applied</th>
+
+        <th>Options</th>
+        <th>Current Status</th>
+
+    </tr>
+    {% for char in official_requests %}
+    <tr>
+        <td>{{char.Name}}</td>
+
+        <td>{{char.Contact_no}}</td>
+        <td>{{char.Province}}</td>
+        <td>{{char.District}}</td>
+        <td>{{char.Local_government}}</td>
+        <td><img src="{{char.identity_proof.url}}" style="height:100px;width:100px;"></td>
+        <td>{{char.date}}</td>
+        <td>
+            {% if char.status == 'rejected' %}
+            <button><a href="{% url 'qualify' char.id %}"> Qualify</a></button>
+            {% elif char.status == 'waiting' %}
+            <button><a href="{% url 'qualify' char.id %}"> Qualify</a></button>
+
+            <button><a href="{% url 'reject' char.id %}"> Reject</a></button>
+
+            {% endif %}
+        </td>
+        <td>
+            {{char.status}}
+
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+
+</body>
+</html>

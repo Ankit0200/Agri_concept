@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>APPROVED OFFICIALS</title>
+
+</head>
+<body>
+<table>
+    <tr>
+
+        <th>
+            Name
+        </th>
+        <th>Contact</th>
+        <th>Province</th>
+        <th>District</th>
+        <th>Local body</th>
+        <th>Identity proof</th>
+        <th>Date joined</th>
+        <th>status</th>
+        <th>Actions</th>
+
+    </tr>
+    {% for char in approved_officials %}
+    <tr>
+        <td>{{char.Name}}</td>
+
+        <td>{{char.Contact_no}}</td>
+        <td>{{char.Province}}</td>
+        <td>{{char.District}}</td>
+        <td>{{char.Local_government}}</td>
+        <td><img src="{{char.identity_proof.url}}" style="height:100px;width:100px;"></td>
+        <td>{{char.date_joined}}</td>
+        <td>
+           ✅✅
+        </td>
+        <td>
+            <button><a href="{% url 'suspend' char.id %}">SUSPEND</a></button>
+            <button><a href="{% url 'remove' char.id %}">REMOVE PERMANENTLY</a></button>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+
+</body>
+</html>

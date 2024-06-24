@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Officer</title>
+</head>
+<body>
+<h1>OFFICER SIGNUP</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Name</label>
+    <input type="text" name="Name"><br><br>
+    <label>Contact</label>
+    <input type="text" name="Contact"><br><br>
+    <label>Province</label>
+    <input type="text" name="Province"><br><br>
+    <label>District</label>
+    <input type="text" name="District"><br><br>
+    <label>Local body</label>
+    <input type="text" name="Local_body"><br><br>
+    <label>Identity_proof</label>
+    <input type="File" name="identity_proof"><br><br>
+    <button type="submit">Submit</button>
+
+
+</form>
+
+</body>
+</html>
