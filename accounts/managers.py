@@ -7,8 +7,7 @@ class UserManager(BaseUserManager):
     def create_user(self, contact_no, password=None, **extra_fields):
         if not contact_no:
             raise ValueError('Contact number must be set')
-        user = self.model(Contact_no=contact_no, **extra_fields)
-        user.set_password(password)
+        user = self.model(Contact_no=contact_no, password=password, **extra_fields)
         user.save(using=self._db)
         return user
 
@@ -18,3 +17,4 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_active', True)
 
         return self.create_user(Contact_no, password, **extra_fields)
+

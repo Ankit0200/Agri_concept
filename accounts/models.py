@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 from .managers import UserManager
 
 
@@ -44,6 +45,7 @@ class official_requests(models.Model):
     Province = models.CharField(max_length=100)
     District = models.CharField(max_length=100)
     Local_government = models.CharField(max_length=100)
+    password=models.CharField(max_length=100,default='<PASSWORD>')
 
     identity_proof = models.ImageField(upload_to='pending_official_requests/')
     date = models.DateTimeField(auto_now_add=True)
