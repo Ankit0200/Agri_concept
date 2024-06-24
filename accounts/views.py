@@ -6,7 +6,7 @@ from django.db.models import Q
 
 # Create your views here.
 def home_page(request):
-    return render(request, 'Signup_selection.html')
+    return render(request, 'Accounts/Signup_selection.html')
 
 
 def farmer_signup(request):
@@ -19,7 +19,7 @@ def farmer_signup(request):
         CustomUser.objects.create_user(Name=Name, contact_no=Phone, Province=Province, District=District,
                                        Local_government=local_body)
 
-    return render(request, 'farmer_signup.html')
+    return render(request, 'Accounts/farmer_signup.html')
 
 
 def officer_signup(request):
@@ -33,13 +33,13 @@ def officer_signup(request):
         official_requests.objects.create(Name=Name, Contact_no=Phone, Province=Province, District=District,
                                          Local_government=local_body, identity_proof=identity_proof)
 
-    return render(request, 'officer_signup.html')
+    return render(request, 'Accounts/officer_signup.html')
 
 
 def check_requests(request):
     official_request = official_requests.objects.filter(Q(status='waiting') | Q(status='rejected'))
 
-    return render(request, 'view_requests.html', {'official_requests': official_request})
+    return render(request, 'Accounts/view_requests.html', {'official_requests': official_request})
 
 
 def qualify_requests(request, id):
@@ -76,9 +76,7 @@ def suspend_officials(request, id):
     req_user=CustomUser.objects.get(id=id)
     req_user_contact = req_user.Contact_no
 
-
     req_user.delete()
-
     ##CHANGING THE STATUS INTO REJECTED IN REQUESTS
 
     request_to_modify=official_requests.objects.get(Contact_no=req_user_contact)
@@ -93,7 +91,6 @@ def remove_officials(request, id):
     req_user.delete()
 
     # NOW DELETING THE REQUEST AS WELL
-
     request_to_delete=official_requests.objects.get(Contact_no=req_user_contact)
     request_to_delete.delete()
-    return HttpResponse(" THE OFFICIAL WAS REMOVED PERMANENTLY WITHOUT")
+    return HttpResponse("THE OFFICIAL WAS REMOVED PERMANENTLY WITHOUT")
