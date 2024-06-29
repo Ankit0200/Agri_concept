@@ -46,4 +46,4 @@ def send_info(information):
         email.attach_file(information.notice.path)
         email.send()
 
-        print("Email sent")
+
