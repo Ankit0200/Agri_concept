@@ -1,0 +1,42 @@
+<html>
+<head>
+</head>
+<body>
+<table>
+    <thead>
+    <th>Uploader</th>
+    <th>News image</th>
+    <th>Date submitted</th>
+    <th>Current_score</th>
+    <th>Current_status</th>
+
+    </thead>
+    <tbody>
+    {% for char in published_news %}
+        <tr>
+            <td>
+                {{ char.Uploader }}
+            </td>
+            <td><a href="{{ char.notice.url }}">
+                <img src="{{ char.notice.url }}" style="height: 100px;width:100px;"></a>
+            </td>
+            <td>{{ char.date_submitted }}</td>
+            <th>{{ char.Uploader.scoreboard_track.Score }}</th>
+            <td>{{ char.status }}</td>
+
+        {% if char.status == 'waiting' %}
+        <td><button>Approve</button></td>
+        {% endif %}
+
+
+
+
+        </tr>
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+</body>
+</html>

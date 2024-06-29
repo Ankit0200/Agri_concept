@@ -6,7 +6,9 @@ from .managers import UserManager
 
 
 class CustomUser(AbstractUser):
+
     username = None
+    email = models.EmailField(max_length=100, null=True)
     Name = models.CharField(max_length=150)
     Contact_no = models.CharField(max_length=100, unique=True)
     Province = models.CharField(max_length=100)
@@ -18,6 +20,8 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'Contact_no'
     REQUIRED_FIELDS = ()
 
+
+
     FARMER_USER = 'Farmer'
     OFFICIAL_USER = 'Official'
 
@@ -26,7 +30,6 @@ class CustomUser(AbstractUser):
         (OFFICIAL_USER, 'Official'),
 
     ]
-
     user_type = models.CharField(
         max_length=10,
         choices=STATUS_CHOICES,
@@ -42,6 +45,7 @@ class CustomUser(AbstractUser):
 class official_requests(models.Model):
     Name = models.CharField(max_length=150)
     Contact_no = models.CharField(max_length=100, unique=True)
+    email=models.EmailField(max_length=100,default='none')
     Province = models.CharField(max_length=100)
     District = models.CharField(max_length=100)
     Local_government = models.CharField(max_length=100)
@@ -67,7 +71,3 @@ class official_requests(models.Model):
         default=STATUS_WAITING,
     )
 
-# class rejected_requests(models.Model):
-#     Name = models.ForeignKey(official_requests, on_delete=models.CASCADE)
-#     reason_of_rejection = models.CharField(max_length=200)
-#     date = models.DateTimeField(auto_now_add=True)

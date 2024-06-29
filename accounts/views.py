@@ -1,9 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from .models import CustomUser, official_requests
 from django.shortcuts import HttpResponse
 from django.db.models import Q
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.hashers import check_password,make_password
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import check_password, make_password
 
 
 # Create your views here.
@@ -18,10 +18,16 @@ def farmer_signup(request):
         Province = request.POST['Province']
         District = request.POST['District']
         local_body = request.POST['Local_body']
-        password =make_password(request.POST['password'])
-        print(password)
-        CustomUser.objects.create_user(Name=Name,contact_no=Phone, Province=Province, District=District,
-                                       Local_government=local_body,password=password)
+        email = request.POST['Email']
+        print(
+            "(**************************************************************************************************************")
+        print(email)
+        print(
+            "(**************************************************************************************************************")
+        password = request.POST['password']
+
+        CustomUser.objects.create_user(Name=Name, Contact_no=Phone, Province=Province, District=District,email=email,
+                                       Local_government=local_body, password=password)
 
     return render(request, 'Accounts/farmer_signup.html')
 
@@ -34,14 +40,12 @@ def officer_signup(request):
         District = request.POST['District']
         local_body = request.POST['Local_body']
         identity_proof = request.FILES['identity_proof']
-        password=make_password(request.POST['password'])
-
+        password = (request.POST['password'])
+        email = request.POST['Email']
 
         official_requests.objects.create(Name=Name, Contact_no=Phone, Province=Province, District=District,
-                                         Local_government=local_body, identity_proof=identity_proof,password=password)
-
-
-
+                                         Local_government=local_body, identity_proof=identity_proof, password=password,
+                                         email=email)
 
     return render(request, 'Accounts/officer_signup.html')
 
@@ -64,15 +68,16 @@ def qualify_requests(request, id):
     District = official_request.District
     local_body = official_request.Local_government
     identity_proof = official_request.identity_proof
-    password=official_request.password
+    password = official_request.password
 
-    CustomUser.objects.create_user(Name=Name, contact_no=Phone, Province=Province, District=District,
-                                   Local_government=local_body, user_type='Official', identity_proof=identity_proof,password=password)
+    CustomUser.objects.create_user(Name=Name, Contact_no=Phone, Province=Province, District=District,
+                                   Local_government=local_body, user_type='Official', identity_proof=identity_proof,
+                                   password=password, email=official_request.email)
 
     return HttpResponse("You added them to the User database successfully")
 
 
-def reject_request(request,id):
+def reject_request(request, id):
     official_request = official_requests.objects.get(id=id)
     official_request.status = 'rejected'
     official_request.save()
@@ -83,38 +88,40 @@ def approved_officials(request):
     approved = CustomUser.objects.filter(user_type='Official')
     return render(request, 'accounts/approved_officials.html', {'approved_officials': approved})
 
+
 def suspend_officials(request, id):
-    req_user=CustomUser.objects.get(id=id)
+    req_user = CustomUser.objects.get(id=id)
     req_user_contact = req_user.Contact_no
 
     req_user.delete()
     ##CHANGING THE STATUS INTO REJECTED IN REQUESTS
 
-    request_to_modify=official_requests.objects.get(Contact_no=req_user_contact)
+    request_to_modify = official_requests.objects.get(Contact_no=req_user_contact)
     request_to_modify.status = 'rejected'
     request_to_modify.save()
 
     return HttpResponse("SUSPENDED SUCCESSFULLY FROM THE OFFICIAL SECTION")
 
+
 def remove_officials(request, id):
-    req_user=CustomUser.objects.get(id=id)
-    req_user_contact=req_user.Contact_no
+    req_user = CustomUser.objects.get(id=id)
+    req_user_contact = req_user.Contact_no
     req_user.delete()
 
     # NOW DELETING THE REQUEST AS WELL
-    request_to_delete=official_requests.objects.get(Contact_no=req_user_contact)
+    request_to_delete = official_requests.objects.get(Contact_no=req_user_contact)
     request_to_delete.delete()
     return HttpResponse("THE OFFICIAL WAS REMOVED PERMANENTLY WITHOUT")
 
 
 def login_view(request):
     if request.method == 'POST':
-        contact=request.POST['contact']
-        password=request.POST['password']
-        user= authenticate(request,Contact_no=contact, password=password)
+        contact = request.POST['contact']
+        password = request.POST['password']
+        user = authenticate(request, Contact_no=contact, password=password)
         if user is not None:
-            login(request,user)
+            login(request, user)
             return HttpResponse(f"Welcome MR {request.user.Name}")
         else:
             return HttpResponse('INVALID CREDINTIALS')
-    return render(request,'accounts/login.html')
+    return render(request, 'accounts/login.html')

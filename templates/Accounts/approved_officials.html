@@ -13,6 +13,7 @@
         <th>
             Name
         </th>
+
         <th>Contact</th>
         <th>Province</th>
         <th>District</th>
@@ -24,23 +25,23 @@
 
     </tr>
     {% for char in approved_officials %}
-    <tr>
-        <td>{{char.Name}}</td>
+        <tr>
+            <td>{{ char.Name }}</td>
 
-        <td>{{char.Contact_no}}</td>
-        <td>{{char.Province}}</td>
-        <td>{{char.District}}</td>
-        <td>{{char.Local_government}}</td>
-        <td><img src="{{char.identity_proof.url}}" style="height:100px;width:100px;"></td>
-        <td>{{char.date_joined}}</td>
-        <td>
-           ✅✅
-        </td>
-        <td>
-            <button><a href="{% url 'suspend' char.id %}">SUSPEND</a></button>
-            <button><a href="{% url 'remove' char.id %}">REMOVE PERMANENTLY</a></button>
-        </td>
-    </tr>
+            <td>{{ char.Contact_no }}</td>
+            <td>{{ char.Province }}</td>
+            <td>{{ char.District }}</td>
+            <td>{{ char.Local_government }}</td>
+            <td><img src="{{ char.identity_proof.url }}" style="height:100px;width:100px;"></td>
+            <td>{{ char.date_joined }}</td>
+            <td>
+                ✅✅
+            </td>
+            <td>
+                <button><a href="{% url 'suspend' char.id %}">SUSPEND</a></button>
+                <button><a href="{% url 'remove' char.id %}">REMOVE PERMANENTLY</a></button>
+            </td>
+        </tr>
     {% endfor %}
 
 </table>
