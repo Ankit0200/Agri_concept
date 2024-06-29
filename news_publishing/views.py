@@ -17,7 +17,8 @@ def home_page(request):
                     request.user.scoreboard_track.Score+=1
                     request.user.scoreboard_track.save()
                     new.save()  # Save the changes to update status
-            except:
+            except Exception as e:
+                print(e)
                 print("SOMETHING WENT WRONG")
                 pass  # Handle case where no scoreboard instance exists
 
