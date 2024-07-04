@@ -10,8 +10,6 @@ def track_status_change(sender, instance, **kwargs):
     if instance.pk:
         previous = sender.objects.get(pk=instance.pk)
         instance._original_status = previous.status
-
-
 @receiver(post_save, sender=notice_submission)
 def notice_submission_status_change(sender, instance, created, **kwargs):
     print("Came hereeee")
@@ -32,7 +30,6 @@ from django.core.mail import EmailMessage
 
 def send_info(information):
     local_gov = information.Uploader.Local_government
-
     target_consumers = CustomUser.objects.filter(Local_government=local_gov)
     for char in target_consumers:
 

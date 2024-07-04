@@ -1,9 +1,15 @@
+from .serializers import DistrictSerializer,LocalSerializer
 from django.shortcuts import render, redirect
-from .models import CustomUser, official_requests
+from rest_framework.throttling import AnonRateThrottle
+
+
 from django.shortcuts import HttpResponse
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
+
+from .models import CustomUser, official_requests, District, Province, LocalBody
+
 
 
 # Create your views here.
@@ -36,19 +42,22 @@ def officer_signup(request):
     if request.method == 'POST':
         Name = request.POST['Name']
         Phone = request.POST['Contact']
-        Province = request.POST['Province']
+        Province_selected = request.POST['Province']
         District = request.POST['District']
         local_body = request.POST['Local_body']
         identity_proof = request.FILES['identity_proof']
-        password = (request.POST['password'])
+        password = request.POST['password']
         email = request.POST['Email']
 
-        official_requests.objects.create(Name=Name, Contact_no=Phone, Province=Province, District=District,
-                                         Local_government=local_body, identity_proof=identity_proof, password=password,
-                                         email=email)
+        official_requests.objects.create(
+            Name=Name, Contact_no=Phone, Province=Province_selected, District=District,
+            Local_government=local_body, identity_proof=identity_proof, password=password,
+            email=email
+        )
+        return HttpResponse("Request sent successfully")
 
-    return render(request, 'Accounts/officer_signup.html')
-
+    provinces = Province.objects.all()
+    return render(request, 'Accounts/officer_signup.html', {'provinces': provinces})
 
 def check_requests(request):
     official_request = official_requests.objects.filter(Q(status='waiting') | Q(status='rejected'))
@@ -125,3 +134,29 @@ def login_view(request):
         else:
             return HttpResponse('INVALID CREDINTIALS')
     return render(request, 'accounts/login.html')
+
+
+
+
+
+
+
+# API VIEWS
+
+from rest_framework.generics import ListAPIView
+
+class DistrictsList(ListAPIView):
+    throttle_class=[AnonRateThrottle]
+    serializer_class=DistrictSerializer
+
+    def get_queryset(self):
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        My_id=self.kwargs['province_id']
+        return District.objects.filter(province_id=My_id)
+
+class LocalListView(ListAPIView):
+    throttle_class=[]
+    serializer_class=LocalSerializer
+
+    def get_queryset(self):
+        return LocalBody.objects.filter(district_id=self.kwargs['district_id'])

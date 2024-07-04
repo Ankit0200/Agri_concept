@@ -71,3 +71,27 @@ class official_requests(models.Model):
         default=STATUS_WAITING,
     )
 
+
+
+# TO POPULATE DISTRICTS WHILE SELECTING.
+
+
+class Province(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class District(models.Model):
+    name = models.CharField(max_length=100)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class LocalBody(models.Model):
+    name = models.CharField(max_length=100)
+    district = models.ForeignKey(District, related_name='local_bodies', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

@@ -29,6 +29,12 @@ def home_page(request):
         return HttpResponse("You are not authorized to view this page.")
 
 def published_news(request):
-    published_news=notice_submission.objects.filter(status='published')
+    published_news=notice_submission.objects.all()
     return render(request, 'publish_news/published_news.html',{'published_news':published_news})
 
+
+def notice_approve(request,id):
+    notice_to_approve=notice_submission.objects.get(id=id)
+    notice_to_approve.status = 'published'
+    notice_to_approve.save()
+    return redirect('news_list')

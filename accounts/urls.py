@@ -13,6 +13,6 @@ urlpatterns = [
     path('approved/', views.approved_officials, name='approved'),
     path('approved/suspend/<int:id>', views.suspend_officials,name='suspend'),
     path('approved/remove/<int:id>', views.remove_officials, name='remove'),
-    path('login/', views.login_view, name='login')
+    path('login/', views.login_view, name='login'),
 ]
 
