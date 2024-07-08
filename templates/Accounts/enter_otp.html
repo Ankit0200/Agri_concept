@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <body>
+    <div class="container mt-5">
+        <div class="row">
+            <form method="post" class="col-lg-6 offset-3">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger text-center" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% csrf_token %}
+                <div class="mb-3 ">
+                    <label for="exampleInputEmail1" class="form-label" id="variable_criteria">OTP</label>
+                    <input type="number" class="form-control" id="input_box" name="otp" placeholder="enter your otp">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+
+            </form>
+        </div>
+    </div>
+
+    </body>
+{% endblock %}

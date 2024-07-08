@@ -1,32 +1,235 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Farmer Signup </title>
-</head>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Farmer Signup{% endblock %}
+{% block style %}
+
+    <link rel="stylesheet" href="{% static 'officer_reg.css' %}">
+{% endblock %}
+
+{% block body %}
 <body>
-<form action="" method="post">
-    {% csrf_token %}
-    <label>Name</label>
-    <input type="text" name="Name"><br><br>
-    <label>Contact</label>
-    <input type="text" name="Contact"><br><br>
-     <label>Email</label>
-    <input type="email" name="Email"><br><br>
-    <label>Province</label>
-    <input type="text" name="Province"><br><br>
-    <label>District</label>
-    <input type="text" name="District"><br><br>
-    <label>Local body</label>
-    <input type="text" name="Local_body"><br><br>
+<div class="container">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary upper" style="background-color: white">
+        <div class="container-fluid upper">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse upper" id="navbarTogglerDemo01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 upper">
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4" aria-current="page" href="#">Mission</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4" aria-current="page" href="#">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4" aria-current="page" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-5" aria-current="page">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4 ms-5" aria-current="page" href="#">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-5" aria-current="page" href="#"> Gallery </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-5" aria-current="page" href="#">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="middle col-lg-12 col-12">
+                <div class="container inside">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card  mt-2 new">
+                                <div class="card-title text-center fs-4 fw-bolder">
+                                    किसान दर्ता फारम
+                                </div>
 
-    <label>Password</label>
-    <input type="password" name="password"><br><br>
-    <button type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container inside mt-4">
+                    <div class="row">
+                        <form class=" col-lg-9 col-11 offset-1" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="form-floating mb-3 py-1">
+                                <input type="text" class="form-control ps-4" id="floatingInput"
+                                       placeholder="name@example.com" name="Name">
+                                <label for="floatingInput" class="ms-3 ">शुभ नाम </label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control ps-4" id='contact' placeholder="" name="Contact">
+                                <label for="floatingPassword" class="ms-3">मोबाईल नंबर </label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email " class="form-control ps-4" id="
+email" placeholder="" name="Email">
+                                <label for="floatingPassword" class="ms-3">ईमेल (Email) </label>
+                            </div>
+                            <div class="form-floating mb-3 ">
+                                <select class="form-control fs-16 ps-4 " id="province" name="Province">
+                                    <option>SELECT PROVINCE</option>
+                                    {% for char in provinces %}
+                                        <option value="{{ char.id }}">{{ char.name }}</option>
+                                    {% endfor %}
+
+                                </select>
+                                <label for="Province" class="ms-3">प्रदेश</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control fs-16 ps-4 " id="District" name="District">
 
 
-</form>
+                                </select>
+                                <label for="floatingPassword" class="ms-3 ">जिल्ला </label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control fs-16 ps-4 " id="Local_government" name="Local_body">
+
+
+                                </select>
+                                <label for="floatingPassword" class="ms-3"> नगरपालिका </label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="Password" class="form-control ps-4" id="floatingPassword" placeholder=""
+                                       name="password">
+                                <label for="floatingPassword" class="ms-3">पासवर्ड </label>
+                            </div>
+                            <div class="form-check
+
+">
+                                <input class="form-check-input" type="checkbox" value="" id="termsCheck">
+                                <label class="form-check-label  my_label" for="termsCheck">
+                                    I have agreed to all the terms and conditions
+                                </label>
+                            </div>
+                            <div class="btns-place ">
+                                <button class="btn btn-dark submit_btn p-2 " type="submit">दर्ता गर्नुहोस</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const province = document.getElementById("province");
+        const districts = document.getElementById("District");
+        const local_body = document.getElementById("Local_government");
+
+        province.addEventListener('change', function () {
+            const selectedProvince = province.value;
+            districts.innerHTML = ''
+            local_body.innerHTML = ''
+
+
+            fetchDistrict(selectedProvince);
+
+
+        });
+
+        async function fetchDistrict(selectedProvince) {
+            try {
+                console.log(selectedProvince);
+                const response = await fetch(`http://127.0.0.1:8000/districts/${selectedProvince}`);
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+
+                const data = await response.json();
+                districts.innerHTML = ''
+                console.log(data.length)
+                console.log(data)
+                console.log("WE VISITED HEREEEE ")
+
+                const default_dist = document.createElement('option')
+                default_dist.textContent = 'SELECT A DISTRICT';
+                districts.appendChild(default_dist)
+
+
+                for (i = 0; i < (data.length); i++) {
+
+                    const option = document.createElement('option')
+                    option.value = data[i].id;
+                    option.textContent = data[i].name;
+                    districts.appendChild(option)
+
+                }
+
+
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+
+
+        districts.addEventListener('change', function () {
+            local_body.innerHTML = ''
+            const selected_district = districts.value;
+            console.log(selected_district)
+            fetchlocal(selected_district)
+        })
+
+        async function fetchlocal(selected_district) {
+            try {
+                console.log(selected_district);
+                const response = await fetch(`http://127.0.0.1:8000/local/${selected_district}`);
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+
+                const data = await response.json();
+
+
+                const default_local = document.createElement('option')
+                default_local.textContent = 'select a  Local body';
+                local_body.appendChild(default_local)
+
+
+                for (i = 0; i < (data.length); i++) {
+
+
+                    const option = document.createElement('option')
+                    option.value = data[i].id;
+                    option.textContent = data[i].name;
+                    local_body.appendChild(option)
+
+                }
+
+
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+
+        }
+
+
+    });
+</script>
 
 
 </body>
-</html>
+{% endblock %}

@@ -4,7 +4,7 @@
 <body>
 <table>
     <thead>
-            </td>
+    </td>
     <th>Uploader</th>
     <th>News image</th>
     <th>Date submitted</th>
@@ -25,11 +25,11 @@
             <th>{{ char.Uploader.scoreboard_track.Score }}</th>
             <td>{{ char.status }}</td>
 
-        {% if char.status == 'waiting' %}
-            <td><button><a href="{% url 'notice_approve' char.id %}">Approve</a></button></td>
-        {% endif %}
-
-
+            {% if char.status == 'waiting' %}
+                <td>
+                    <button><a href="{% url 'notice_approve' char.id %}">Approve</a></button>
+                </td>
+            {% endif %}
 
 
         </tr>

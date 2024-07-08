@@ -1,60 +1,84 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>VIEW REQUESTS</title>
+{% block title %} Official requests {% endblock %}
+{% block style %}
 
-</head>
+{% endblock %}
+
+
+
+
+{% block body %}
 <body>
-<table>
-    <tr>
+<div class="container-fluid bg-primary">
+    <div class="card">
+        <div class="card-title text-center fw-bolder mt-2 fs-3">
+            OFFICIAL REQUESTS PAGE ! STAFF ONLY
+        </div>
+        <div class="card-title text-center fw-bolder">
+            WELCOME MR ANKIT
 
-        <th>
-            Name
-        </th>
-        <th>Contact</th>
-        <th>Email</th>
-        <th>Province</th>
-        <th>District</th>
-        <th>Local body</th>
-        <th>Identity proof</th>
-        <th>Date applied</th>
+        </div>
+    </div>
 
-        <th>Options</th>
-        <th>Current Status</th>
+    <div class="container-fluid bg-warning mt-5">
+        <table class="table table-hover">
+            <tr>
+                <thead>
+                <th class="text-center">S.N</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Contact</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Province</th>
+                <th class="text-center">District</th>
+                <th class="text-center">Local body</th>
+                <th class="text-center">Identity proof</th>
+                <th class="text-center">Date applied</th>
+                <th class="text-center">Options</th>
+                <th class="text-center">Current status</th>
 
-    </tr>
-    {% for char in official_requests %}
-    <tr>
-        <td>{{char.Name}}</td>
+                </thead>
+            </tr>
+            <tbody>
+            {% for char in official_requests %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ char.Name }}</td>
 
-        <td>{{char.Contact_no}}</td>
-        <td>{{ char.email }}</td>
-        <td>{{char.Province}}</td>
-        <td>{{char.District}}</td>
-        <td>{{char.Local_government}}</td>
-        <td><img src="{{char.identity_proof.url}}" style="height:100px;width:100px;"></td>
-        <td>{{char.date}}</td>
-        <td>
-            {% if char.status == 'rejected' %}
-            <button><a href="{% url 'qualify' char.id %}"> Qualify</a></button>
-            {% elif char.status == 'waiting' %}
-            <button><a href="{% url 'qualify' char.id %}"> Qualify</a></button>
+                    <td>{{ char.Contact_no }}</td>
+                    <td>{{ char.email }}</td>
+                    <td>{{ char.Province }}</td>
+                    <td>{{ char.District }}</td>
+                    <td>{{ char.Local_government }}</td>
+                    <td><a href="{{ char.identity_proof.url }}"><img src="{{ char.identity_proof.url }}"
+                                                                     style="height:100px;width:100px;"></a></td>
+                    <td>{{ char.date }}</td>
+                    <td>
+                        {% if char.status == 'rejected' %}
+                            <button><a href="{% url 'qualify' char.id %}"> Qualify</a></button>
+                        {% elif char.status == 'waiting' %}
+                            <button><a href="{% url 'qualify' char.id %}"> Qualify</a></button>
 
-            <button><a href="{% url 'reject' char.id %}"> Reject</a></button>
+                            <button><a href="{% url 'reject' char.id %}"> Reject</a></button>
 
-            {% endif %}
-        </td>
-        <td>
-            {{char.status}}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ char.status }}
 
-        </td>
-    </tr>
-    {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
 
-</table>
 
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+</div>
 
 </body>
-</html>
+{% endblock %}

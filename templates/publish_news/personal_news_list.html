@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    <style>
+        body {
+            background-color: rgb(167, 167, 166);
+        }
+
+        .title {
+            background-color: inherit;
+            color: yellow;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <body>
+    <div class="container-fluid ms-3 mt-5 d-flex justify-content-between">
+        <button class="hamburger" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainmenu"
+                aria-controls="offcanvasExample">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+        </button>
+        <!-- CANVAS START -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="mainmenu" aria-labelledby="offcanvasExampleLabel"
+             style="width:200px;">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Options</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="container ms-4 my-1 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"/>
+                    </svg>
+                    <button class="btn fw-bolder fs-9">Home</button>
+                </div>
+                <div class="container ms-4 my-2 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-book"
+                         viewBox="0 0 16 16">
+                        <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+                    </svg>
+                    <button class="btn fw-bolder fs-9">Blogs</button>
+                </div>
+                <div class="container ms-4 my-2 ">
+                    <img src="{% static 'images/service.png' %}" style="height: 22px;width: 20px;">
+                    <button class="btn fw-bolder fs-9">Services</button>
+                </div>
+                <div class="container ms-4 my-2 ">
+                    <img src="{% static 'images/service.png' %}" style="height: 22px;width: 20px;">
+                    <button class="btn fw-bolder fs-9">About us</button>
+                </div>
+                <div class="container ms-4 my-2 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-person-rolodex" viewBox="0 0 16 16">
+                        <path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                        <path d="M1 1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h.5a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h.5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.707L6 1.293A1 1 0 0 0 5.293 1zm0 1h4.293L6 2.707A1 1 0 0 0 6.707 3H15v10h-.085a1.5 1.5 0 0 0-2.4-.63C11.885 11.223 10.554 10 8 10c-2.555 0-3.886 1.224-4.514 2.37a1.5 1.5 0 0 0-2.4.63H1z"/>
+                    </svg>
+                    <button class="btn fw-bolder fs-9">Contact</button>
+                </div>
+            </div>
+        </div>
+        <!-- MAIN MENU ENDED -->
+        <div class="card title border-0">
+            <div class="card-title fs-4 p-2 fw-bolder ">
+                WELCOME {{ request.user.Name }}
+            </div>
+        </div>
+        <div class="imgplace rounded-circle">
+            <img src="{% static 'images/profile_logo.png' %}"
+                 style="height: 70px; width:70px; mix-blend-mode: multiply;"
+                 class="rounded-circle me-5" data-bs-toggle="offcanvas" data-bs-target="#profmenu"
+                 aria-controls="offcanvasExample">
+        </div>
+        <!-- PROFILE MENU STARTED -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="profmenu" aria-labelledby="offcanvasExampleLabel"
+             style="width:350px;">
+            <div class="offcanvas-header d-flex justify-content-evenly dash">
+                <img src="{% static 'images/profile_logo.png' %}"
+                     style="height: 75px; width:75px; mix-blend-mode: multiply;"
+                     class="rounded-circle mt-1">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ request.user.Name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="container ms-4 my-3 ">
+                    <img src="{% static 'images/medal-color-icon.png' %}" style="height: 22px;width: 20px;">
+                    <button class="btn fw-bolder fs-6">My Score</button>
+                    <span class="score ms-5 ps-3 fw-bolder mt-5 pt-1 fs-6">79</span>
+                </div>
+
+                <div class="container ms-4 my-3 ">
+                    <img src="{% static 'images/notices-board-icon.png' %}" style="height: 22px;width: 20px;">
+                    <button class="btn fw-bolder fs-6">Pubslished News</button>
+                </div>
+                <div class="container ms-4 my-3 ">
+                    <img src="{% static 'images/competition-icon.png' %}" style="height: 22px;width: 20px;">
+                    <button class="btn fw-bolder fs-6">LeaderBoard</button>
+                </div>
+                <div class="container ms-4 my-3 ">
+                    <img src="{% static 'images/sign-out-icon.png' %}" style="height: 22px;width: 20px;">
+                    <button class="btn fw-bolder fs-6">Logout</button>
+                </div>
+            </div>
+        </div>
+        <!-- PROFILE MENU ENDED -->
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12  ms-3 card-title fw-bolder fs-3" style="color:purple;">
+                YOUR WORKS
+
+                {% for char in personal_news %}
+                    <div class="col-lg-8 offset-1 mt-3 d-flex border border-2 mb-2">
+                        <a href="{{ char.notice.url }}"><img src="{{ char.notice.url }}"
+                                                             style="height: 200px; width: 250px;"
+                                                             class="p-3  rounded-5"></a>
+                        <div class="card border-0" style="background-color: inherit;">
+                            <h5 class="card-title mt-3 ms-3 fw-bolder fs-4">{{ char.notice_title }} </h5>
+                            <h6 class="card-subtitle lead mt-1  ms-5 fs-14"
+                                style="color:rgb(5, 5, 5);">{{ char.date_submitted }} </h6>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+        <script>
+            document.querySelector('.hamburger').addEventListener('click', function () {
+                this.classList.toggle('is-active');
+            });
+        </script>
+
+    </body>
+{% endblock %}

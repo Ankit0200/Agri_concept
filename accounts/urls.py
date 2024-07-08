@@ -11,8 +11,13 @@ urlpatterns = [
     path("qualify/<int:id>", views.qualify_requests, name='qualify'),
     path('reject/<int:id>', views.reject_request,name='reject'),
     path('approved/', views.approved_officials, name='approved'),
-    path('approved/suspend/<int:id>', views.suspend_officials,name='suspend'),
-    path('approved/remove/<int:id>', views.remove_officials, name='remove'),
+    path('approved/suspend/', views.suspend_officials,name='suspend'),
+    path('approved/remove/', views.remove_officials, name='remove'),
     path('login/', views.login_view, name='login'),
+    path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('otp_enter/', views.otp_enter, name='otp_enter'),
+    path('reset_password/', views.reset_password, name='reset_password_name'),
+    path('homepage/',views.after_official_login,name='homepage_after_official_login'),
+
 ]
 

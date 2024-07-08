@@ -22,6 +22,7 @@ from accounts import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("",views.home_page,name="index"),
     path("accounts/",include('accounts.urls')),
     path('news_publish/',include("news_publishing.urls")),
 

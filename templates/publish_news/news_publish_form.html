@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+
+    <style>
+        body {
+            background-color: rgb(167, 167, 166);
+        }
+    </style>
+
+
+{% endblock %}
+{% block body %}
+
+<body>
+<div class="container  ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-title fw-bolder text-center fs-4 mt-2">
+                PUBLISH NOTICE
+            </div>
+        </div>
+        <div class="col-lg-8 offset-2 mt-5">
+            <form enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label"> बिषय </label>
+                    <input type="text" class="form-control" name="title">
+
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label"> सूचना</label>
+                    <input type="FILE" class="form-control" placeholder="सूचना अपलोड  गर्नुहोस  ! " name="notice">
+                </div>
+
+                <button type="submit" class="btn btn-success mt-2">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+{% endblock %}

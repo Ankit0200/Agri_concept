@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from .models import notice_submission
 from accounts.models import CustomUser
 from django.core.mail import send_mail
+from news_publishing.models import scoreboard
 
 
 @receiver(pre_save, sender=notice_submission)
@@ -22,6 +23,9 @@ def notice_submission_status_change(sender, instance, created, **kwargs):
             print(f"THE STATUS is changed to  {instance.status}")
             if instance.status == 'published':
                 send_info(instance)
+                My_scoreboard,created= scoreboard.objects.get_or_create(User=instance.Uploader)
+                My_scoreboard.Score+=1;
+                My_scoreboard.save()
 
 
 from django.conf import settings
