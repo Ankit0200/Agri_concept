@@ -88,25 +88,31 @@ WSGI_APPLICATION = 'agri_cure.wsgi.application'
 #
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ankit_3dko',
-        'USER': 'ankit_3dko_user',
-        'PASSWORD': 'nQDOWYMkUzRDhVK1bRN4MzNW9PaNYa9T',
-        'HOST': 'dpg-cq6icq3v2p9s73cnb0h0-a.oregon-postgres.render.com',
-        'PORT': 5432,
-    }
-}
-
-# DATABASE_URL="postgresql://ankit_3dko_user:nQDOWYMkUzRDhVK1bRN4MzNW9PaNYa9T@dpg-cq6icq3v2p9s73cnb0h0-a.oregon-postgres.render.com/ankit_3dko"
-#
-#
-# DATABASES={
-#     'default':dj_database_url.parse(
-#         DATABASE_URL
-#     )
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'ankit_3dko',
+#         'USER': 'ankit_3dko_user',
+#         'PASSWORD': 'nQDOWYMkUzRDhVK1bRN4MzNW9PaNYa9T',
+#         'HOST': 'dpg-cq6icq3v2p9s73cnb0h0-a.oregon-postgres.render.com',
+#         'PORT': 5432,
+#     }
 # }
+
+
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': os.environ.get('DB_NAME'),
+         'USER': os.environ.get('USER'),
+         'PASSWORD':os.environ.get('PASSWORD'),
+         'HOST': os.environ.get('HOST'),
+        'PORT': 5432,
+     }
+ }
+
+
+
 
 
 # DATABASES = {
