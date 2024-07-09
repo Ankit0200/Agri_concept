@@ -38,8 +38,8 @@ def send_info(information):
     for char in target_consumers:
 
         email = EmailMessage(
-            'New offer for you',
-            f'Hello {char.Name}\n\n {information.Uploader.Name} has uploaded new agriculture scheme available in your area.',
+            f'{information.notice_title}',
+            f'Hello {char.Name},\n\n \t\t{information.Uploader.Name} has uploaded new agriculture scheme available in your area.',
             f'{settings.EMAIL_HOST_USER}',
             [char.email]
 

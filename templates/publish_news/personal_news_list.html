@@ -13,6 +13,19 @@
             background-color: inherit;
             color: yellow;
         }
+
+        .dash {
+            border-bottom: 4px dashed black;
+        }
+
+        .khali {
+            height: 30px;
+        }
+
+        .ancher {
+            color: black;
+            text-decoration: none;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -46,15 +59,16 @@
                          viewBox="0 0 16 16">
                         <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
                     </svg>
-                    <button class="btn fw-bolder fs-9">Blogs</button>
+                    <button class="btn fw-bolder fs-9"><a href="{% url 'blogs' %}" class="ancher"> Blogs</a></button>
                 </div>
                 <div class="container ms-4 my-2 ">
                     <img src="{% static 'images/service.png' %}" style="height: 22px;width: 20px;">
-                    <button class="btn fw-bolder fs-9">Services</button>
+                    <button class="btn fw-bolder fs-9"><a href="{% url 'services_view' %}" class="ancher">Services</a>
+                    </button>
                 </div>
                 <div class="container ms-4 my-2 ">
                     <img src="{% static 'images/service.png' %}" style="height: 22px;width: 20px;">
-                    <button class="btn fw-bolder fs-9">About us</button>
+                    <button class="btn fw-bolder fs-9"><a href="{% url 'index' %}" class="ancher">About us</a></button>
                 </div>
                 <div class="container ms-4 my-2 ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -62,7 +76,8 @@
                         <path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                         <path d="M1 1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h.5a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h.5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.707L6 1.293A1 1 0 0 0 5.293 1zm0 1h4.293L6 2.707A1 1 0 0 0 6.707 3H15v10h-.085a1.5 1.5 0 0 0-2.4-.63C11.885 11.223 10.554 10 8 10c-2.555 0-3.886 1.224-4.514 2.37a1.5 1.5 0 0 0-2.4.63H1z"/>
                     </svg>
-                    <button class="btn fw-bolder fs-9">Contact</button>
+                    <button class="btn fw-bolder fs-9"><a href="{% url 'contact_view' %}" class="ancher">Contact</a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -92,20 +107,24 @@
                 <div class="container ms-4 my-3 ">
                     <img src="{% static 'images/medal-color-icon.png' %}" style="height: 22px;width: 20px;">
                     <button class="btn fw-bolder fs-6">My Score</button>
-                    <span class="score ms-5 ps-3 fw-bolder mt-5 pt-1 fs-6">79</span>
+                    <span class="score ms-5 ps-3 fw-bolder mt-5 pt-1 fs-6">{{ request.user.scoreboard_track.Score }}</span>
                 </div>
 
                 <div class="container ms-4 my-3 ">
                     <img src="{% static 'images/notices-board-icon.png' %}" style="height: 22px;width: 20px;">
-                    <button class="btn fw-bolder fs-6">Pubslished News</button>
+                    <button class="btn fw-bolder fs-6"><a class="ancher"
+                                                          href="{% url 'personal_news' request.user.id %}">Pubslished
+                        News</a></button>
                 </div>
                 <div class="container ms-4 my-3 ">
                     <img src="{% static 'images/competition-icon.png' %}" style="height: 22px;width: 20px;">
-                    <button class="btn fw-bolder fs-6">LeaderBoard</button>
+                    <button class="btn fw-bolder fs-6"><a href="{% url 'leaderboard_view' %}"
+                                                          class="ancher">LeaderBoard</a></button>
                 </div>
                 <div class="container ms-4 my-3 ">
                     <img src="{% static 'images/sign-out-icon.png' %}" style="height: 22px;width: 20px;">
-                    <button class="btn fw-bolder fs-6">Logout</button>
+                    <button class="btn fw-bolder fs-6"><a href="{% url 'logout_view' %}" class="ancher">Logout</a>
+                    </button>
                 </div>
             </div>
         </div>

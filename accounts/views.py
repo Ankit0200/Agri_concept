@@ -14,6 +14,9 @@ from .models import CustomUser, official_requests, District, Province, LocalBody
 import random
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
+from news_publishing.models import notice_submission
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def home_page(request):
@@ -68,62 +71,79 @@ def officer_signup(request):
     return render(request, 'Accounts/officer_signup.html', {'provinces': provinces})
 
 
+@login_required(login_url='login')
 def check_requests(request):
-    official_request = official_requests.objects.filter(Q(status='waiting') | Q(status='rejected'))
+    if request.user.is_superuser:
+        official_request = official_requests.objects.filter(Q(status='waiting') | Q(status='rejected'))
 
-    return render(request, 'Accounts/view_requests.html', {'official_requests': official_request})
+        return render(request, 'Accounts/view_requests.html', {'official_requests': official_request})
+    else:
+        return HttpResponse("You are not authorized to view this page")
 
 
+@login_required(login_url='login')
 def qualify_requests(request, id):
-    official_request = official_requests.objects.get(id=id)
-    official_request.status = 'accepted'
-    official_request.save()
+    if request.user.is_superuser:
+        official_request = official_requests.objects.get(id=id)
+        official_request.status = 'accepted'
+        official_request.save()
 
-    Name = official_request.Name
+        Name = official_request.Name
 
-    Phone = official_request.Contact_no
-    Province = official_request.Province
-    District = official_request.District
-    local_body = official_request.Local_government
-    identity_proof = official_request.identity_proof
-    password = official_request.password
-    email = official_request.email
+        Phone = official_request.Contact_no
+        Province = official_request.Province
+        District = official_request.District
+        local_body = official_request.Local_government
+        identity_proof = official_request.identity_proof
+        password = official_request.password
+        email = official_request.email
 
-    CustomUser.objects.create_user(Name=Name, Contact_no=Phone, Province=Province, District=District,
-                                   Local_government=local_body, user_type='Official', identity_proof=identity_proof,
-                                   email=email, password=password)
-    return redirect('check-requests')
+        CustomUser.objects.create_user(Name=Name, Contact_no=Phone, Province=Province, District=District,
+                                       Local_government=local_body, user_type='Official', identity_proof=identity_proof,
+                                       email=email, password=password)
+        return redirect('check-requests')
+    else:
+        return HttpResponse("You are not authorized for this action")
 
 
+@login_required(login_url='login')
 def reject_request(request, id):
-    official_request = official_requests.objects.get(id=id)
-    official_request.status = 'rejected'
-    official_request.save()
-    return redirect('check-requests')
+    if request.user.is_superuser:
+        official_request = official_requests.objects.get(id=id)
+        official_request.status = 'rejected'
+        official_request.save()
+        return redirect('check-requests')
+    else:
+        return HttpResponse("You are not authorized for this action")
 
+
+@login_required(login_url='login')
 def approved_officials(request):
-    if request.method == 'POST':
-        try:
-            suspend_reason=request.POST['suspend_reason']
-            user_id=request.POST['char_id']
-            request.session['char_id']=user_id
-            request.session['suspend_reason'] =suspend_reason
-            return redirect('suspend')
-        except:
-            resticate_reason=request.POST['resticate_reason']
-            request.session['resticate_reason'] = resticate_reason
-            request.session['char_id']=request.POST['char_id']
-            return redirect('remove')
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            try:
+                suspend_reason = request.POST['suspend_reason']
+                user_id = request.POST['char_id']
+                request.session['char_id'] = user_id
+                request.session['suspend_reason'] = suspend_reason
+                return redirect('suspend')
+            except:
+                resticate_reason = request.POST['resticate_reason']
+                request.session['resticate_reason'] = resticate_reason
+                request.session['char_id'] = request.POST['char_id']
+                return redirect('remove')
 
-    approved = CustomUser.objects.filter(user_type='Official')
-    return render(request, 'accounts/approved_officials.html', {'approved_officials': approved})
+        approved = CustomUser.objects.filter(user_type='Official')
+        return render(request, 'accounts/approved_officials.html', {'approved_officials': approved})
+    else:
+        return redirect('you are not authorized to view this page')
 
 
 def suspend_officials(request):
-    id=request.session['char_id']
+    id = request.session['char_id']
     req_user = CustomUser.objects.get(id=id)
     req_user_contact = req_user.Contact_no
-    suspend_reason=request.session['suspend_reason']
+    suspend_reason = request.session['suspend_reason']
 
     email = EmailMessage(
         subject='YOU HAVE BEEN SUSPENDED FROM KRISHI JANKARI',
@@ -165,9 +185,16 @@ def remove_officials(request):
     return redirect('approved')
 
 
+@login_required(login_url='login')
 def after_official_login(request):
-    if request.user.is_authenticated:
-        return render(request,'accounts/home_page_after_official_login.html')
+    if request.user.is_superuser:
+        return redirect('admin_page')
+    elif request.user.is_authenticated and request.user.user_type == 'Official':
+        Recent_works = notice_submission.objects.filter(Uploader=request.user).order_by('-date_submitted')[:3]
+        return render(request, 'accounts/home_page_after_official_login.html', {'recent_works': Recent_works})
+    elif request.user.is_authenticated and request.user.user_type == 'Farmer':
+        request.session['user_id'] = request.user.id
+        return redirect('recent_news')
 
 
 def login_view(request):
@@ -291,3 +318,33 @@ def reset_password(request):
 
             return HttpResponse("Password updated Successfully ")
     return render(request, 'accounts/reset_password.html')
+
+
+def contact_view(request):
+    if request.method == 'POST':
+        issue = request.POST['issue']
+        contact_detail = request.POST['contact_detail']
+        email = EmailMessage(subject='You received an message',
+                             body=f"Hello admin , \n\n  You have received the following message \n\n {issue} \n\n From:: {contact_detail} ",
+                             from_email={settings.EMAIL_HOST_USER},
+                             to=[settings.EMAIL_HOST_USER])
+        email.send()
+        return HttpResponse("Message sent succesfully")
+    return render(request, 'accounts/contacts.html')
+
+
+def leaderboard_view(request):
+    return HttpResponse(" Leaderboard is coming soon  !")
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("index")
+
+
+def services_view(request):
+    return render(request, 'accounts/services.html')
+
+
+def admin_page(request):
+    return render(request, 'Accounts/admin_page.html')
