@@ -1,0 +1,39 @@
+.my_logo{
+    height: 200px;
+    width: 200px;
+    border:2px solid black;
+    padding: 0px;
+
+    z-index: 1;
+    position: absolute;
+    left: 468px;
+
+}
+
+.middle{
+    background-image:url("../static/images/reg.jpg");
+    background-size: cover;
+    height:120vh;
+    position: relative;
+    top:20px;
+    z-index:0;
+
+}
+
+.new{
+    background-color: inherit;
+    color: rgb(27, 13, 68);
+    border: none;
+}
+.my_label{
+    color:#5855a4;
+    font-weight: bolder;
+    font-size: large;
+    background-color: antiquewhite;
+    padding:3px;
+    margin-bottom: 5px;
+}
+.submit_btn{
+    background-color: rgb(212, 111, 111);
+    font-weight: bolder;
+}
