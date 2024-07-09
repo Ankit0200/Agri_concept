@@ -208,7 +208,7 @@ def login_view(request):
         else:
             messages.error(request, "Invalid credentials")
             return redirect('login')
-    return render(request, 'accounts/login_page.html')
+    return render(request, 'Accounts/login_page.html')
 
 
 def forgot_password(request):
@@ -243,7 +243,7 @@ def forgot_password(request):
             print(e)
             variable = request.POST['contact']
 
-    return render(request, 'accounts/forgot_password.html')
+    return render(request, 'Accounts/forgot_password.html')
 
 
 # API VIEWS
@@ -291,7 +291,7 @@ def otp_enter(request):
             messages.error(request, "INVALID OTP")
             return redirect('otp_enter')
 
-    return render(request, 'accounts/enter_otp.html')
+    return render(request, 'Accounts/enter_otp.html')
 
 
 def reset_password(request):
@@ -317,7 +317,7 @@ def reset_password(request):
             user.update(password=make_password(password_first, salt=None, hasher='default'))
 
             return HttpResponse("Password updated Successfully ")
-    return render(request, 'accounts/reset_password.html')
+    return render(request, 'Accounts/reset_password.html')
 
 
 def contact_view(request):
@@ -330,7 +330,7 @@ def contact_view(request):
                              to=[settings.EMAIL_HOST_USER])
         email.send()
         return HttpResponse("Message sent succesfully")
-    return render(request, 'accounts/contacts.html')
+    return render(request, 'Accounts/contacts.html')
 
 
 def leaderboard_view(request):
@@ -343,7 +343,7 @@ def logout_view(request):
 
 
 def services_view(request):
-    return render(request, 'accounts/services.html')
+    return render(request, 'Accounts/services.html')
 
 
 def admin_page(request):
