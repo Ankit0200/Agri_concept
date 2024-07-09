@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +30,6 @@ SECRET_KEY = 'django-insecure-2%rc@4pr=-9gxn(t&l$ioz=e$0%!&8(ai-n5erh_9g==nx=h*h
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -75,16 +75,46 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'agri_cure.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'ankit_app',
+#         'USER': 'postgres',
+#         'PASSWORD': 'RnWrIerRAiZNekZ2pXhRcKUiZwU4PPT3',
+#         'HOST': 'localhost',
+#
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ankit_3dko',
+        'USER': 'ankit_3dko_user',
+        'PASSWORD': 'nQDOWYMkUzRDhVK1bRN4MzNW9PaNYa9T',
+        'HOST': 'dpg-cq6icq3v2p9s73cnb0h0-a.oregon-postgres.render.com',
+        'PORT': 5432,
     }
 }
+
+# DATABASE_URL="postgresql://ankit_3dko_user:nQDOWYMkUzRDhVK1bRN4MzNW9PaNYa9T@dpg-cq6icq3v2p9s73cnb0h0-a.oregon-postgres.render.com/ankit_3dko"
+#
+#
+# DATABASES={
+#     'default':dj_database_url.parse(
+#         DATABASE_URL
+#     )
+# }
+
+
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=DATABASE_URL
+#     )
+# }
+#
 
 
 # Password validation
@@ -105,7 +135,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -117,11 +146,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL ='static/'
+STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
@@ -134,14 +162,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-
 TIME_ZONE = 'Asia/Kathmandu'
 USE_TZ = True
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER =os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')

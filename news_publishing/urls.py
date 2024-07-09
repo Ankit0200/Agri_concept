@@ -15,3 +15,4 @@ urlpatterns = [
     path('recent_news/', views.recent_news_page, name='recent_news')
 
 ]
+

@@ -18,10 +18,10 @@ def home_page(request):
             new = notice_submission.objects.create(Uploader=request.user, notice=notice_file, notice_title=title)
 
             try:
-<<<<<<< HEAD
+
                 if request.user.scoreboard_track.Score > 20:
                     new.status = 'published'
-                   
+
                     request.user.scoreboard_track.Score+=1
                     request.user.scoreboard_track.save()
                     new.save()  # Save the changes to update status
@@ -29,7 +29,7 @@ def home_page(request):
                 print(e)
                 print("SOMETHING WENT WRONG")
                 pass  # Handle case where no scoreboard instance exists
-=======
+
                 # Ensure the scoreboard instance exist
                 print(f"Current User {request.user.Name}")
                 scoreboard_instance, created = scoreboard.objects.get_or_create(User=request.user)
@@ -39,7 +39,7 @@ def home_page(request):
                         new.status = 'published'
                         scoreboard_instance.Score += 1
                         scoreboard_instance.save()
->>>>>>> local
+
 
                 new.save()
             except Exception as e:

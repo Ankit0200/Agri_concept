@@ -1,35 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
 from .managers import UserManager
 
 
-
-class Province(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-class District(models.Model):
-    name = models.CharField(max_length=100)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
-class LocalBody(models.Model):
-    name = models.CharField(max_length=100)
-    district = models.ForeignKey(District, related_name='local_bodies', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
-
-
 class CustomUser(AbstractUser):
-
     username = None
     email = models.EmailField(max_length=100, null=True)
     Name = models.CharField(max_length=150)
@@ -42,8 +17,6 @@ class CustomUser(AbstractUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     USERNAME_FIELD = 'Contact_no'
     REQUIRED_FIELDS = ()
-
-
 
     FARMER_USER = 'Farmer'
     OFFICIAL_USER = 'Official'
@@ -61,9 +34,6 @@ class CustomUser(AbstractUser):
 
     objects = UserManager()
 
-
-
-
     def __str__(self):
         return self.Name
 
@@ -71,11 +41,11 @@ class CustomUser(AbstractUser):
 class official_requests(models.Model):
     Name = models.CharField(max_length=150)
     Contact_no = models.CharField(max_length=100, unique=True)
-    email=models.EmailField(max_length=100,default='none')
+    email = models.EmailField(max_length=100, default='none')
     Province = models.CharField(max_length=100)
     District = models.CharField(max_length=100)
     Local_government = models.CharField(max_length=100)
-    password=models.CharField(max_length=100,default='<PASSWORD>')
+    password = models.CharField(max_length=100, default='<PASSWORD>')
 
     identity_proof = models.ImageField(upload_to='pending_official_requests/')
     date = models.DateTimeField(auto_now_add=True)
@@ -83,7 +53,6 @@ class official_requests(models.Model):
     STATUS_WAITING = 'waiting'
     STATUS_ACCEPTED = 'accepted'
     STATUS_REJECTED_or_deleted = 'rejected'
-
 
     STATUS_CHOICES = [
         (STATUS_WAITING, 'Waiting'),
@@ -97,3 +66,25 @@ class official_requests(models.Model):
         default=STATUS_WAITING,
     )
 
+
+class Province(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class District(models.Model):
+    name = models.CharField(max_length=100)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class LocalBody(models.Model):
+    name = models.CharField(max_length=100)
+    district = models.ForeignKey(District, related_name='local_bodies', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

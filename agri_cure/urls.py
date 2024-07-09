@@ -26,7 +26,7 @@ urlpatterns = [
     path("accounts/",include('accounts.urls')),
     path('news_publish/',include("news_publishing.urls")),
 
-#     API VIEWS FROM HERE
+    # API VIEWS FROM HERE
     path('districts/<int:province_id>',views.DistrictsList.as_view(),name='districtsapi'),
     path('local/<int:district_id>',views.LocalListView.as_view(),name='localapi')
 ]
