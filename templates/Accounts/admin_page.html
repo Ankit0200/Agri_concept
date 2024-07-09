@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Recent News in your area</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="style.css"/>
+    <style>
+        .ancher {
+            color: white;
+            text-decoration: none;
+
+        }
+    </style>
+</head>
+
+<body>
+<div class="container upper p-0">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary upper" style="background-color: white">
+        <div class="container-fluid upper">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse upper" id="navbarTogglerDemo01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 upper">
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4" aria-current="page" href="#">Mission</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4" aria-current="page" href="#">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4" aria-current="page" href="#">Services</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                      <a class="nav-link active mx-5" aria-current="page"><img src="../images/K.J.png"
+                          class="navbar-brand rounded rounded-circle my_logo" />
+                      </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link active mx-4 ms-5" aria-current="page" href="#">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-5" aria-current="page" href="#"> Gallery </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active mx-5" aria-current="page" href="#">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="min-height: 100vh; background-color: rgb(167,167,166)">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-12  ms-3 card-title text-center fw-bolder fs-3 text-white p-2">
+                    WELCOME ADMIN ! YOU ARE THE SUPER USER
+
+                </div>
+                <div class="col-lg-3 offset-1 mt-3 d-flex border border-2 mb-2 col-10 text-center">
+                    <a href="{% url 'check-requests' %}" class="ancher">
+                        <img src="{% static 'images/Check Requests.png' %}" style="height: 200px; width: 250px;"
+                             class="p-3  ms-3 rounded-5">
+                        <div class="card-title fw-bolder text-white fs-4 mb-1 ms-1">
+                            Check requests
+                        </div>
+
+                    </a>
+
+                </div>
+
+                <div class="col-lg-3 offset-1 mt-3 d-flex border border-2 mb-2 col-10 text-center">
+                    <a href="{% url 'approved' %}" class="ancher">
+                        <img src="{% static 'images/certified.png' %}" style="height: 200px; width: 250px;"
+                             class="p-3  ms-3 rounded-5">
+                        <div class="card-title fw-bolder text-white fs-4 mb-1 ms-3">
+                            Approved Officials
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <div class="col-lg-3 offset-1 mt-3 d-flex border border-2 mb-2 col-10 text-center">
+                    <a href="{% url 'news_list' %}" class="ancher">
+                        <img src="{% static 'images/notice.png' %}" style="height: 200px; width: 250px;"
+                             class="p-3  ms-3 rounded-5">
+                        <div class="card-title fw-bolder text-white fs-4 mb-1 ms-3">
+                            Publish News
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>
+

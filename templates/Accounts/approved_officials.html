@@ -1,51 +1,188 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>APPROVED OFFICIALS</title>
-
-</head>
-<body>
-<table>
-    <tr>
-
-        <th>
-            Name
-        </th>
-
-        <th>Contact</th>
-        <th>Province</th>
-        <th>District</th>
-        <th>Local body</th>
-        <th>Identity proof</th>
-        <th>Date joined</th>
-        <th>status</th>
-        <th>Actions</th>
-
-    </tr>
-    {% for char in approved_officials %}
-        <tr>
-            <td>{{ char.Name }}</td>
-
-            <td>{{ char.Contact_no }}</td>
-            <td>{{ char.Province }}</td>
-            <td>{{ char.District }}</td>
-            <td>{{ char.Local_government }}</td>
-            <td><img src="{{ char.identity_proof.url }}" style="height:100px;width:100px;"></td>
-            <td>{{ char.date_joined }}</td>
-            <td>
-                ✅✅
-            </td>
-            <td>
-                <button><a href="{% url 'suspend' char.id %}">SUSPEND</a></button>
-                <button><a href="{% url 'remove' char.id %}">REMOVE PERMANENTLY</a></button>
-            </td>
-        </tr>
-    {% endfor %}
-
-</table>
+{% extends 'base.html' %}
+{% block title %} Approved Officials {% endblock %}
+{% block style %}
 
 
-</body>
-</html>
+    <style>
+        .suspend {
+            position: absolute;
+            top: 20%;
+            z-index: 3;
+        }
+
+        .suspend-hidden {
+            visibility: hidden;
+            position: absolute;
+            top: 0%;
+            height: 1px;
+            width: 1px;
+            transform: translate(-50%, -50%) scale(0.1);
+        }
+
+        .blur-background {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            visibility: hidden;
+        }
+
+        .modal-overlay.visible {
+            visibility: visible;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <body>
+    <div id="modal-overlay" class="modal-overlay"></div>
+    <div class="container mt-5 suspend-hidden" id="reason">
+        <div class="row">
+            <div class="card col-lg-6 offset-3 py-3 border-0">
+                <div class="card-title text-center titleee">Suspend</div>
+                <form id="form" method="post">
+                    {% csrf_token %}
+                    <textarea class="form-control text-area" placeholder="Suspend Reason"
+                              name="suspend_reason"></textarea>
+                    <input type="text" class="form-control" id="hidden_id_place" hidden name="char_id">
+                    <div class="btns-grp text-center">
+                        <button type="submit" class="btn btn-success mt-2 px-5 final-suspend">Suspend</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="content">
+        <div class="card">
+            <div class="card-title text-center fw-bolder mt-2 fs-3">OFFICIAL USER'S PAGE ! STAFF ONLY</div>
+            <div class="card-title text-center fw-bolder">WELCOME ADMIN </div>
+        </div>
+
+        <div class="container-fluid mt-5">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center">S.N</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Contact</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Province</th>
+                    <th class="text-center">District</th>
+                    <th class="text-center">Local body</th>
+                    <th class="text-center">Identity proof</th>
+                    <th class="text-center">Date joined</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for char in approved_officials %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ char.Name }}</td>
+                        <td>{{ char.Contact_no }}</td>
+                        <td>{{ char.email }}</td>
+                        <td>{{ char.Province }}</td>
+                        <td>{{ char.District }}</td>
+                        <td>{{ char.Local_government }}</td>
+                        <td>
+                            <a href="{{ char.identity_proof.url }}">
+                                <img src="{{ char.identity_proof.url }}" style="height:100px;width:100px;">
+                            </a>
+                        </td>
+                        <td>{{ char.date_joined }}</td>
+                        <td>✅✅</td>
+                        <td>
+                            <button class="btn btn-warning fw-bolder suspend-btn" value="{{ char.id }}">
+                                <a class="fs-12" style="color:white;text-decoration: none">SUSPEND</a>
+                            </button>
+                            <button class="btn btn-danger resticate-btn" value="{{ char.id }}">
+                                <a style="color:white;text-decoration: none">REMOVE
+                                    PERMANENTLY</a>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        const my_reason = document.getElementById("reason");
+        const suspendButtons = document.querySelectorAll(".suspend-btn");
+        const modalOverlay = document.getElementById("modal-overlay");
+        const content = document.getElementById("content");
+
+
+        const resticateButtons = document.querySelectorAll(".resticate-btn");
+        resticateButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                my_reason.classList.remove("suspend-hidden");
+                my_reason.classList.add("suspend");
+                content.classList.add("blur-background");
+                modalOverlay.classList.add("visible");
+
+                const title = document.querySelector(".titleee")
+                title.innerText = "Rusticate"
+
+                const text_area = document.querySelector(".text-area")
+                text_area.setAttribute("placeholder", "Rusticate  Reason");
+                text_area.name = "resticate_reason"
+
+                const btn = document.querySelector(".final-suspend")
+                btn.innerText = "Rusticate"
+
+                const id_value = button.getAttribute('value');
+                console.log(id_value);
+                const hidden_text_box = document.getElementById("hidden_id_place")
+                hidden_text_box.value = id_value;
+
+
+            })
+        })
+
+        suspendButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                my_reason.classList.remove("suspend-hidden");
+                my_reason.classList.add("suspend");
+                content.classList.add("blur-background");
+                modalOverlay.classList.add("visible");
+
+                const id_value = button.getAttribute('value');
+                console.log(id_value);
+                const hidden_text_box = document.getElementById("hidden_id_place")
+                hidden_text_box.value = id_value;
+
+
+            });
+        });
+
+        modalOverlay.addEventListener("click", function () {
+            my_reason.classList.remove("suspend");
+            my_reason.classList.add("suspend-hidden");
+            content.classList.remove("blur-background");
+            modalOverlay.classList.remove("visible");
+        });
+
+        const final_suspend = document.getElementById("finalsuspend")
+
+        final_suspend.addEventListener("click", function () {
+            my_reason.classList.remove("suspend");
+            my_reason.classList.add("suspend-hidden");
+            content.classList.remove("blur-background");
+            modalOverlay.classList.remove("visible");
+
+        })
+
+
+    </script>
+    </body>
+{% endblock %}

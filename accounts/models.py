@@ -5,6 +5,29 @@ from django.db import models
 from .managers import UserManager
 
 
+
+class Province(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class District(models.Model):
+    name = models.CharField(max_length=100)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class LocalBody(models.Model):
+    name = models.CharField(max_length=100)
+    district = models.ForeignKey(District, related_name='local_bodies', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+
 class CustomUser(AbstractUser):
 
     username = None
@@ -37,6 +60,9 @@ class CustomUser(AbstractUser):
     )
 
     objects = UserManager()
+
+
+
 
     def __str__(self):
         return self.Name
