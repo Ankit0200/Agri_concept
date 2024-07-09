@@ -102,4 +102,4 @@ def recent_news_page(request):
     for char in recent_news:
         print(recent_news)
 
-    return render(request, 'accounts/recent_neews_in_area.html', {'recent_news': recent_news})
+    return render(request, 'Accounts/recent_neews_in_area.html', {'recent_news': recent_news})
