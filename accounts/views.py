@@ -208,7 +208,7 @@ def login_view(request):
         else:
             messages.error(request, "Invalid credentials")
             return redirect('login')
-    return render(request, 'accounts/login.html')
+    return render(request, 'accounts/login_page.html')
 
 
 def forgot_password(request):
