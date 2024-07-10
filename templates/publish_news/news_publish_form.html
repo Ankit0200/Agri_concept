@@ -1,43 +1,60 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-
     <style>
         body {
-            background-color: rgb(167, 167, 166);
+            background-color: #f0f0f0;
+        }
+
+        .container-custom {
+            margin-top: 50px;
+        }
+
+        .card-custom {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .form-label-custom {
+            font-weight: bold;
+        }
+
+        .btn-custom {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
         }
     </style>
-
-
 {% endblock %}
-{% block body %}
 
-<body>
-<div class="container  ">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card-title fw-bolder text-center fs-4 mt-2">
-                PUBLISH NOTICE
+{% block body %}
+    <body>
+    <div class="container container-custom">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="fw-bolder mt-2">PUBLISH NOTICE</h2>
             </div>
         </div>
-        <div class="col-lg-8 offset-2 mt-5">
-            <form enctype="multipart/form-data" method="post">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label"> बिषय </label>
-                    <input type="text" class="form-control" name="title">
-
+        <div class="row mt-4">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="card card-custom">
+                    <form enctype="multipart/form-data" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="form-label form-label-custom">बिषय</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notice" class="form-label form-label-custom">सूचना</label>
+                            <input type="file" class="form-control" id="notice" name="notice" required>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-custom mt-3">Submit</button>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label"> सूचना</label>
-                    <input type="FILE" class="form-control" placeholder="सूचना अपलोड  गर्नुहोस  ! " name="notice">
-                </div>
-
-                <button type="submit" class="btn btn-success mt-2">Submit</button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
-
-</body>
+    </body>
 {% endblock %}
