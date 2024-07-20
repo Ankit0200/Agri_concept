@@ -75,39 +75,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'agri_cure.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'ankit_app',
-#         'USER': 'postgres',
-#         'PASSWORD': 'RnWrIerRAiZNekZ2pXhRcKUiZwU4PPT3',
-#         'HOST': 'localhost',
-#
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ankit_3dko',
-        'USER': 'ankit_3dko_user',
-        'PASSWORD': 'nQDOWYMkUzRDhVK1bRN4MzNW9PaNYa9T',
-        'HOST': 'dpg-cq6icq3v2p9s73cnb0h0-a.oregon-postgres.render.com',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
-
-# DATABASE_URL="postgresql://ankit_3dko_user:nQDOWYMkUzRDhVK1bRN4MzNW9PaNYa9T@dpg-cq6icq3v2p9s73cnb0h0-a.oregon-postgres.render.com/ankit_3dko"
-#
-#
-# DATABASES={
-#     'default':dj_database_url.parse(
-#         DATABASE_URL
-#     )
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -161,5 +134,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = 'ankitdevkota107@gmail.com'
+EMAIL_HOST_PASSWORD = "hlcm ejly eobf uyfr"

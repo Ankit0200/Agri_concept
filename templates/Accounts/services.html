@@ -7,11 +7,13 @@
         .navbar-custom {
             background-color: #f8f9fa;
         }
+
         .nav-link-custom {
             margin-right: 20px;
             font-size: 18px;
             font-weight: 500;
         }
+
         .card-custom {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -19,17 +21,21 @@
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .card-img-custom {
             height: 150px;
             width: 150px;
         }
+
         .card-title-custom {
             font-size: 20px;
             font-weight: bold;
         }
+
         .card-text-custom {
             font-size: 16px;
         }
+
         .container-custom {
             margin-top: 30px;
         }
@@ -37,7 +43,7 @@
 {% endblock %}
 
 {% block body %}
-<body>
+    <body>
     <div class="container p-0">
         <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
             <div class="container-fluid">
@@ -49,25 +55,26 @@
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link nav-link-custom active" aria-current="page"
+                               href="{% url 'index' %}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">Mission</a>
+                            <a class="nav-link nav-link-custom" href="{% url 'index' %}">Mission</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">About us</a>
+                            <a class="nav-link nav-link-custom" href="{% url 'index' %}">About us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">Services</a>
+                            <a class="nav-link nav-link-custom" href="{% url 'services_view' %}">Services</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">Blogs</a>
+                            <a class="nav-link nav-link-custom" href="{% url 'blogs' %}">Blogs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">Gallery</a>
+                            <a class="nav-link nav-link-custom" href="{% url 'gallery' %}">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">Contact us</a>
+                            <a class="nav-link nav-link-custom" href="{% url 'contact_view' %}">Contact us</a>
                         </li>
                     </ul>
                 </div>
@@ -131,5 +138,5 @@
             </div>
         </div>
     </div>
-</body>
+    </body>
 {% endblock %}

@@ -3,6 +3,7 @@ from .models import notice_submission, scoreboard
 from django.contrib.auth.decorators import login_required
 from accounts.models import CustomUser
 from . models import notice_submission
+from django.db.models import Q
 
 
 # Create your views here.
@@ -45,7 +46,7 @@ def home_page(request):
             except Exception as e:
                 print(f"SOMETHING WENT WRONG: {e}")
 
-            return redirect('homepage_after_official_login')
+            return HttpResponse("You have requested to post this news. Once the admin approves the notice will be posted")
 
         return render(request, 'publish_news/news_publish_form.html')
     else:
@@ -70,7 +71,8 @@ def notice_approve(request, id):
 @login_required(login_url='login')
 def personal_news(request, id):
     if request.user.user_type == 'Official':
-        personal_news = notice_submission.objects.filter(Uploader_id=id)
+        personal_news = notice_submission.objects.filter(Q(Uploader_id=id) & Q(status='published')).order_by('-date_submitted')
+
         return render(request, 'publish_news/personal_news_list.html', context={
             'personal_news': personal_news
         })

@@ -1,6 +1,6 @@
 import time
 
-from .serializers import DistrictSerializer, LocalSerializer
+from .serializers import DistrictSerializer, LocalSerializer,leaderboardSerializer
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from rest_framework.throttling import AnonRateThrottle
 from django.contrib import messages
@@ -14,12 +14,15 @@ from .models import CustomUser, official_requests, District, Province, LocalBody
 import random
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
-from news_publishing.models import notice_submission
+from news_publishing.models import notice_submission,scoreboard
 from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 def home_page(request):
+    if request.user.is_superuser:
+        return redirect('admin_page')
+
     return render(request, 'Accounts/Signup_selection.html')
 
 
@@ -190,7 +193,7 @@ def after_official_login(request):
     if request.user.is_superuser:
         return redirect('admin_page')
     elif request.user.is_authenticated and request.user.user_type == 'Official':
-        Recent_works = notice_submission.objects.filter(Uploader=request.user).order_by('-date_submitted')[:3]
+        Recent_works = notice_submission.objects.filter(Q(Uploader=request.user) & Q(status='published')).order_by('-date_submitted')[:3]
         return render(request, 'Accounts/home_page_after_official_login.html', {'recent_works': Recent_works})
     elif request.user.is_authenticated and request.user.user_type == 'Farmer':
         request.session['user_id'] = request.user.id
@@ -267,6 +270,14 @@ class LocalListView(ListAPIView):
     def get_queryset(self):
         return LocalBody.objects.filter(district_id=self.kwargs['district_id'])
 
+# class leaderboard_api(ListAPIView):
+#     throttle_class = []
+#     serializer_class = leaderboardSerializer
+#
+#     def get_queryset(self):
+#         return scoreboard.objects.filter()
+
+
 
 def otp_enter(request):
     if request.method == 'POST':
@@ -320,6 +331,11 @@ def reset_password(request):
     return render(request, 'Accounts/reset_password.html')
 
 
+def leaderboards(request):
+
+    return render(request, 'Accounts/leaderboards.html')
+
+
 def contact_view(request):
     if request.method == 'POST':
         issue = request.POST['issue']
@@ -332,9 +348,11 @@ def contact_view(request):
         return HttpResponse("Message sent succesfully")
     return render(request, 'Accounts/contacts.html')
 
-
+@login_required(login_url='login')
 def leaderboard_view(request):
-    return HttpResponse(" Leaderboard is coming soon  !")
+    scoreboard_detail = scoreboard.objects.all().order_by('-Score')
+    return render(request, 'Accounts/leaderboards.html', context={'scoreboard': scoreboard_detail})
+
 
 
 def logout_view(request):
@@ -348,3 +366,6 @@ def services_view(request):
 
 def admin_page(request):
     return render(request, 'Accounts/admin_page.html')
+
+
+

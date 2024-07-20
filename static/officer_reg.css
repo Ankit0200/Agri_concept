@@ -11,7 +11,8 @@
 }
 
 .middle{
-    background-image:url("../static/images/reg.jpg");
+    /*background-image:url("../static/images/reg.jpg");*/
+    background-color:beige;
     background-size: cover;
     height:120vh;
     position: relative;

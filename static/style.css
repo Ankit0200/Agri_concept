@@ -37,15 +37,19 @@
 
 .middle {
 
-    background-image: url("../static/images/new_cover.jpg");
+    background-image: url("../static/images/cover.png");
     background-size: cover; /* Ensures the image covers the entire element */
     background-position: center; /* Centers the image */
     height: 100vh; /* Sets the height to 100% of the viewport height */
-    position: relative;
-    top: 47px; /* Adjust this value as needed */
+    /*position: relative;*/
+    /*top: 47px; !* Adjust this value as needed *!*/
     z-index: 0;
+    border-radius: 40px;
+
 
 }
+
+
 
 .inside {
     position: relative;
