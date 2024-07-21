@@ -115,9 +115,9 @@ def send_in_contact(request, id):
     # and set the environment variables. See http://twil.io/secure
 
 
-    account_sid = os.environ.get('ACCOUNT_SID')
-    auth_token = os.environ.get('AUTH_TOKEN')
-    client = Client(account_sid, auth_token)
+    # account_sid = os.environ.get('ACCOUNT_SID')
+    # auth_token = os.environ.get('AUTH_TOKEN')
+    # client = Client(account_sid, auth_token)
     local_gov = news.Uploader.Local_government
     target_consumers = CustomUser.objects.filter(Local_government=local_gov)
 
