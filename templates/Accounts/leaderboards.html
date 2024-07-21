@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Krishi Jankari</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .leaderboard {
+            margin: 20px 0;
+        }
+
+        .leaderboard .top-1 {
+            background-color: gold;
+            font-weight: bold;
+        }
+
+        .leaderboard .top-2 {
+            font-weight: bold;
+        }
+
+        .leaderboard .top-3 {
+            font-weight: bold;
+        }
+
+        .leaderboard .icon {
+            margin-right: 10px;
+        }
+
+        .icon-first {
+            color: gold;
+        }
+
+        .icon-second {
+            color: silver;
+        }
+
+        .icon-third {
+            color: bronze;
+        }
+
+        .filter-dropdown {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Leaderboard</h1>
+    <div class="filter-dropdown text-center">
+        <select id="locationFilter" class="form-control w-50 mx-auto">
+            <option value="country">Whole Country</option>
+            {#                <option value="district1">District 1</option>#}
+            {#                <option value="district2">District 2</option>#}
+        </select>
+    </div>
+    <div class="leaderboard table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">User</th>
+                <th scope="col">Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for char in scoreboard %}
+                {% if forloop.counter == 1 %}
+                    <tr class="top-1">
+                        <td><span class="icon icon-first">&#x1F947;</span> 1</td>
+                        <td>{{ char.User.Name }}</td>
+                        <td>{{ char.Score }}</td>
+                    </tr>
+                {% elif forloop.counter == 2 %}
+                    <tr class="top-2">
+                        <td><span class="icon icon-second">&#x1F948;</span> 2</td>
+                        <td>{{ char.User.Name }}</td>
+                        <td>{{ char.Score }}</td>
+                    </tr>
+                {% elif forloop.counter == 3 %}
+                    <tr class="top-3">
+                        <td><span class="icon icon-third">&#x1F949;</span> 3</td>
+                        <td>{{ char.User.Name }}</td>
+                        <td>{{ char.Score }}</td>
+                    </tr>
+                {% else %}
+                    <tr class="">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ char.User.Name }}</td>
+                        <td>{{ char.Score }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Handle the filter change
+    document.getElementById('locationFilter').addEventListener('change', function () {
+        // Fetch and update the leaderboard based on selected location
+        const selectedLocation = this.value;
+        console.log('Selected location:', selectedLocation);
+        // Add your AJAX call or form submission here to update the leaderboard
+    });
+</script>
+</body>
+</html>

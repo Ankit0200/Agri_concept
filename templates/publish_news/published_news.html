@@ -36,33 +36,51 @@
             </tr>
             <tbody>
             {% for char in published_news %}
-                <tr>
-                    <td>{{ char.Uploader }}</td>
-                    <td>{{ char.notice_title }}</td>
+            <tr>
+                <td>{{ char.Uploader }}</td>
+                <td>{{ char.notice_title }}</td>
 
-                    <td>
-                        <a href="{{ char.notice.url }}">
-                            <img
-                                    src="{{ char.notice.url }}"
-                                    style="height: 100px; width: 100px"
-                            /></a>
-                    </td>
-                    <td>{{ char.date_submitted }}</td>
-                    <th>{{ char.Uploader.scoreboard_track.Score }}</th>
-                    <td>{{ char.status }}</td>
+                <td>
+                    <a href="{{ char.notice.url }}">
+                        <img
+                                src="{{ char.notice.url }}"
+                                style="height: 100px; width: 100px"
+                        /></a>
+                </td>
+                <td>{{ char.date_submitted }}</td>
+                <th>{{ char.Uploader.scoreboard_track.Score }}</th>
+                <td>{{ char.status }}</td>
 
-                    {% if char.status == 'waiting' %}
-                        <td>
-                            <button class="btn btn-success px-4">
-                                <a href="{% url 'notice_approve' char.id %}" style="color:white;text-decoration: none;">Publish</a>
-                            </button>
-                        </td>
-                        {% else %}
-                        <td>
-                        <button class="btn btn-primary px-3" disabled>Published</button>
-                        </td>
+                {% if char.status == 'waiting' %}
+                <td>
+                    <button class="btn btn-success px-4">
+                        <a href="{% url 'notice_approve' char.id %}"
+                           style="color:white;text-decoration: none;">Publish</a>
+                    </button>
+                    <button class="btn btn-success px-4">
+                        <a href="{% url 'send_in_contact' char.id %}" style="color:white;text-decoration: none;">Send in
+                            contact</a>
+                    </button>
+
+                </td>
+                {% else %}
+                <td>
+                    <button class="btn btn-primary px-3" disabled>Published</button>
+                    {% if not char.sent_in_phone %}
+                    <button class="btn btn-success px-4" >
+                        <a href="{% url 'send_in_contact' char.id %}" style="color:white;text-decoration: none;">Send in
+                            contact</a>
+                    </button>
+                    {% else %}
+                    <button class="btn btn-success px-4" disabled >
+                        <a href="{% url 'send_in_contact' char.id %}" style="color:white;text-decoration: none;">Send in
+                            contact</a>
+                    </button>
+
                     {% endif %}
-                </tr>
+                </td>
+                {% endif %}
+            </tr>
             {% endfor %}
             </tbody>
         </table>
