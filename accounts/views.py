@@ -68,7 +68,7 @@ def officer_signup(request):
             Local_government=my_local, identity_proof=identity_proof, password=to_save_pass,
             email=email
         )
-        return HttpResponse("Request sent successfully")
+        return render(request, 'accounts/request_sent.html')
 
     provinces = Province.objects.all()
     return render(request, 'Accounts/officer_signup.html', {'provinces': provinces})
@@ -366,6 +366,9 @@ def services_view(request):
 
 def admin_page(request):
     return render(request, 'Accounts/admin_page.html')
+
+
+
 
 
 

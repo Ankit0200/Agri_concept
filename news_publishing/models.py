@@ -24,6 +24,8 @@ class notice_submission(models.Model):
         choices=STATUS_CHOICES,
         default=STATUS_WAITING,
     )
+    sent_in_phone=models.BooleanField(default=False)
+
 
     def save(self, *args, **kwargs):
 

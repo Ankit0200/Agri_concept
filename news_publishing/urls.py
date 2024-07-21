@@ -12,7 +12,8 @@ urlpatterns = [
     path(
         'gallery/', views.gallery_view, name='gallery'
     ),
-    path('recent_news/', views.recent_news_page, name='recent_news')
+    path('recent_news/', views.recent_news_page, name='recent_news'),
+    path('send_in_contact/<int:id>', views.send_in_contact, name='send_in_contact')
 
 ]
 
