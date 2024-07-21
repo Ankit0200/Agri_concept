@@ -113,8 +113,10 @@ def send_in_contact(request, id):
 
     # Find your Account SID and Auth Token at twilio.com/console
     # and set the environment variables. See http://twil.io/secure
-    account_sid = "AC54e47b957c30c0fe3d9ea2ebf9b15cc4"
-    auth_token = "2711df9c451bb6a620a2a8ddc38f97ee"
+
+
+    account_sid = os.environ.get('ACCOUNT_SID')
+    auth_token = os.environ.get('AUTH_TOKEN')
     client = Client(account_sid, auth_token)
     local_gov = news.Uploader.Local_government
     target_consumers = CustomUser.objects.filter(Local_government=local_gov)
