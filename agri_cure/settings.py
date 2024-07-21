@@ -76,7 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'agri_cure.wsgi.application'
 
-<<<<<<< HEAD
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -121,7 +121,6 @@ DATABASES = {
 #
 
 
-=======
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -129,7 +128,7 @@ DATABASES = {
     }
 }
 
->>>>>>> local
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -182,14 +181,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-<<<<<<< HEAD
+
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-=======
+
 EMAIL_HOST_USER = 'ankitdevkota107@gmail.com'
 EMAIL_HOST_PASSWORD = "hlcm ejly eobf uyfr"
->>>>>>> local
+
