@@ -190,6 +190,3 @@ if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-EMAIL_HOST_USER = 'ankitdevkota107@gmail.com'
-EMAIL_HOST_PASSWORD = "hlcm ejly eobf uyfr"
-
